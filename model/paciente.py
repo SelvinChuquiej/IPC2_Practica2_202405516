@@ -1,10 +1,18 @@
 class Paciente:
-    def __init__(self, nombre, edad, especialidad, tiempo_estimado):
+    def __init__(self, nombre, edad, especialidad):
         self.nombre = nombre
         self.edad = edad
         self.especialidad = especialidad
-        self.tiempo_estimado = tiempo_estimado
-        self.siguiente = None
 
+        self.tiempos = {
+            "Medicina General": 10,
+            "Pediatría": 15,
+            "Ginecología": 20,
+            "Dermatología": 25
+        }
+
+    def tiempo_atencion(self):
+        return self.tiempos.get(self.especialidad, 10)
+    
     def __str__(self):
-        return f"Paciente(nombre={self.nombre}, edad={self.edad}, especialidad={self.especialidad}, tiempo_estimado={self.tiempo_estimado})"
+        return f"{self.nombre} ({self.edad} años) - {self.especialidad}"
