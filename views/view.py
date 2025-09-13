@@ -49,6 +49,7 @@ class TurnosApp:
 
         paciente = self.controller.agregar_paciente(nombre, int(edad), especialidad,)
         self.actualizar_lista()
+        self.mostrar_grafico() 
         messagebox.showinfo("Registrado", f"Paciente agregado:\n{paciente}")
 
     def atender(self):
@@ -58,6 +59,8 @@ class TurnosApp:
         else:
             messagebox.showinfo("Cola vacía", "No hay pacientes en espera")
         self.actualizar_lista()
+        self.mostrar_grafico() 
+
 
     def actualizar_lista(self):
         self.lista.delete(0, tk.END) 
@@ -69,3 +72,17 @@ class TurnosApp:
         self.label_tiempo.config(
             text=f"Tiempo total estimado en cola: {self.controller.tiempo_espera()} min"
         )
+
+    def mostrar_grafico(self):
+        img_path = self.controller.graficar_cola()
+
+        ventana = tk.Toplevel()
+        ventana.title("Cola de Pacientes")
+        
+        img = Image.open(img_path)
+        img = img.resize((600, 200))
+        img_tk = ImageTk.PhotoImage(img)
+
+        lbl = tk.Label(ventana, image=img_tk)
+        lbl.image = img_tk
+        lbl.pack()
